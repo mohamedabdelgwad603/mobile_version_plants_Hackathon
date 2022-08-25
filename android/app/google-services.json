@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "941633061087",
+    "project_id": "plants-signinwith",
+    "storage_bucket": "plants-signinwith.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:941633061087:android:0399b9ef6f7c3ce19ba96a",
+        "android_client_info": {
+          "package_name": "com.ecommerce.plants"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "941633061087-5ibk1hqrbt0ri9s09e5v2f35r8frnapu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ecommerce.plants",
+            "certificate_hash": "5177ae14a61a0deb1b08bc797d020a41d4c91a05"
+          }
+        },
+        {
+          "client_id": "941633061087-tujsr24nhv0a9f5603s7cviu0lhioeto.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_AAqghRtx6mIFy6XDt_37B-odDRUz41I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "941633061087-tujsr24nhv0a9f5603s7cviu0lhioeto.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
