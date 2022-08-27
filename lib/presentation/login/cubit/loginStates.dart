@@ -19,8 +19,5 @@ class AppLoginErrorState extends AppLoginStates {}
 // change password visibility stste
 class AppLoginChangVisibiltyState extends AppLoginStates {}
 
-//sign with google
-class SignInWithGoogleState extends AppLoginStates {}
-
 //sign with face
 class SignInWithFaceBookState extends AppLoginStates {}

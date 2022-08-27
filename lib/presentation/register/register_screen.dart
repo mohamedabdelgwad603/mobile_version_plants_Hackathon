@@ -10,6 +10,8 @@ import '../../core/utils/constants.dart';
 import '../../network/local/cashe_helper.dart';
 
 import '../root/root_page.dart';
+import '../shared_cubit/app_cubit.dart';
+import '../shared_cubit/app_states.dart';
 import '../shared_widget/default_button.dart';
 import '../shared_widget/default_form_field.dart';
 import '../shared_widget/separetor_widget.dart';
@@ -38,19 +40,8 @@ class RegisterScreen extends StatelessWidget {
               Constants.push(context, RootPage());
               AppStrings.token = state.registerModel.data!.user?.accessToken;
               print(AppStrings.token);
-              if (value) {
-                // Constants.push(context, Scaffold());
-              }
             });
-            Constants.showToast(
-              color: Colors.green,
-              msg: "${state.registerModel.message}",
-            );
           }
-        } else {
-          Constants.showToast(
-            msg: "${context.registerCubit.registerModel.message}",
-          );
         }
       }, builder: (context, state) {
         var cubit = BlocProvider.of<AppRegisterCubit>(context);
@@ -187,17 +178,38 @@ class RegisterScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        InkWell(
-                          onTap: () {},
-                          child: Container(
-                            padding: EdgeInsets.zero,
-                            child: Image.asset(
-                              ImgAssets.google,
-                              width: 30,
-                              height: 30,
-                              //  fit: BoxFit.cover,
-                            ),
-                          ),
+                        BlocConsumer<AppCubit, AppStates>(
+                          listener: (context, state) {
+                            if (state is SuccessSendGoogleEmailToApi) {
+                              if (state.loginModel.type == "Success") {
+                                CashHelper.setData("token",
+                                        state.loginModel.userData?.accessToken)
+                                    .then((value) {
+                                  Constants.pushReplace(context, RootPage());
+                                  AppStrings.token =
+                                      state.loginModel.userData?.accessToken;
+                                });
+                              }
+                            }
+                          },
+                          builder: (context, state) {
+                            if (state is! LoadingSendGoogleEmailToApi) {
+                              return InkWell(
+                                onTap: () {
+                                  BlocProvider.of<AppCubit>(context)
+                                      .signInWithGoogle();
+                                },
+                                child: Image.asset(
+                                  ImgAssets.google,
+                                  width: 30,
+                                  height: 30,
+                                  fit: BoxFit.cover,
+                                ),
+                              );
+                            } else {
+                              return CircularProgressIndicator();
+                            }
+                          },
                         ),
                         InkWell(
                           onTap: () {},

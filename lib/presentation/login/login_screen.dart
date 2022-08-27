@@ -4,13 +4,13 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:palnts/core/utils/extentions.dart';
-
 import '../../core/utils/app_strings.dart';
 import '../../core/utils/assets_manger.dart';
 import '../../core/utils/constants.dart';
 import '../../network/local/cashe_helper.dart';
 import '../root/root_page.dart';
 import '../shared_cubit/app_cubit.dart';
+import '../shared_cubit/app_states.dart';
 import '../shared_widget/default_button.dart';
 import '../shared_widget/default_form_field.dart';
 import '../shared_widget/separetor_widget.dart';
@@ -21,6 +21,7 @@ class LoginScreeen extends StatelessWidget {
   TextEditingController emailConrtoller = TextEditingController();
   TextEditingController passConrtoller = TextEditingController();
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -28,28 +29,17 @@ class LoginScreeen extends StatelessWidget {
       child: BlocConsumer<AppLoginCubit, AppLoginStates>(
           listener: (context, state) {
         if (state is AppLoginSuccessState) {
-          print('access tolken is ${state.loginModel.userData?.accessToken}');
-          CashHelper.setData("token", state.loginModel.userData?.accessToken)
-              .then((value) {
-            Constants.pushReplace(context, RootPage());
-            BlocProvider.of<AppCubit>(context).getProducts();
-            AppStrings.token = state.loginModel.userData?.accessToken;
-            print(AppStrings.token);
-            if (value) {
-              ///  Constants.push(context, Scaffold());
-            }
-          });
-          Constants.showToast(
-            color: Colors.green,
-            msg: "${state.loginModel.message}",
-          );
-        } else {
-          Constants.showToast(
-            msg: "${context.loginCubit.loginModel.message}",
-          );
+          if (state.loginModel.type == "Success") {
+            CashHelper.setData("token", state.loginModel.userData?.accessToken)
+                .then((value) {
+              Constants.pushReplace(context, RootPage());
+              AppStrings.token = state.loginModel.userData?.accessToken;
+            });
+          }
         }
       }, builder: (context, state) {
         var cubit = BlocProvider.of<AppLoginCubit>(context);
+
         return Center(
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
@@ -124,23 +114,42 @@ class LoginScreeen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        InkWell(
-                          onTap: () {
-                            cubit.signInWithGoogle();
+                        BlocConsumer<AppCubit, AppStates>(
+                          listener: (context, state) {
+                            if (state is SuccessSendGoogleEmailToApi) {
+                              if (state.loginModel.type == "Success") {
+                                CashHelper.setData("token",
+                                        state.loginModel.userData?.accessToken)
+                                    .then((value) {
+                                  Constants.pushReplace(context, RootPage());
+                                  AppStrings.token =
+                                      state.loginModel.userData?.accessToken;
+                                });
+                              }
+                            }
                           },
-                          child: Container(
-                            padding: EdgeInsets.zero,
-                            child: Image.asset(
-                              ImgAssets.google,
-                              width: 30,
-                              height: 30,
-                              //  fit: BoxFit.cover,
-                            ),
-                          ),
+                          builder: (context, state) {
+                            if (state is! LoadingSendGoogleEmailToApi) {
+                              return InkWell(
+                                onTap: () {
+                                  BlocProvider.of<AppCubit>(context)
+                                      .signInWithGoogle();
+                                },
+                                child: Image.asset(
+                                  ImgAssets.google,
+                                  width: 30,
+                                  height: 30,
+                                  fit: BoxFit.cover,
+                                ),
+                              );
+                            } else {
+                              return CircularProgressIndicator();
+                            }
+                          },
                         ),
                         InkWell(
                           onTap: () {
-                            cubit.signInWithFace();
+                            cubit.faceBookSignIn();
                           },
                           child: Image.asset(
                             ImgAssets.face,
@@ -148,7 +157,7 @@ class LoginScreeen extends StatelessWidget {
                             height: 40,
                             fit: BoxFit.cover,
                           ),
-                        ),
+                        )
                       ],
                     )
                   ],

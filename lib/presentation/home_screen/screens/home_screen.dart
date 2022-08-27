@@ -1,15 +1,23 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_constructors
 
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:palnts/core/utils/app_colors.dart';
 import 'package:palnts/core/utils/extentions.dart';
 import 'package:palnts/presentation/home_screen/screens/all_screen.dart';
 import 'package:palnts/presentation/home_screen/screens/plants_screen.dart';
 import 'package:palnts/presentation/home_screen/screens/seeds_screen.dart';
 import 'package:palnts/presentation/home_screen/screens/tools_screen.dart';
+import 'package:palnts/presentation/home_screen/widgets/conditional_builder_grid.dart';
+import 'package:palnts/presentation/shared_cubit/app_cubit.dart';
+import 'package:palnts/presentation/shared_cubit/app_states.dart';
 
+import '../../../core/utils/app_strings.dart';
 import '../../../core/utils/constants.dart';
+import '../../../network/local/cashe_helper.dart';
 import '../../search/search_screen.dart';
+import '../../sign_layout/screens/sign_layout_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -61,9 +69,25 @@ class _HomeScreenState extends State<HomeScreen> {
                 decoration: BoxDecoration(
                     color: AppColors.primary,
                     borderRadius: BorderRadius.circular(10)),
-                child: Icon(
-                  Icons.shopping_cart_outlined,
-                  color: Colors.white,
+                child: BlocConsumer<AppCubit, AppStates>(
+                  listener: (context, state) {},
+                  builder: (context, state) {
+                    return ConditionalBuilder(
+                        condition: state is! LoadingAppLogoutState,
+                        builder: (context) => InkWell(
+                              onTap: () {
+                                BlocProvider.of<AppCubit>(context)
+                                    .logout(context);
+                              },
+                              child: Icon(
+                                Icons.shopping_cart_outlined,
+                                color: Colors.white,
+                              ),
+                            ),
+                        fallback: (context) => CircularProgressIndicator(
+                              color: Colors.white,
+                            ));
+                  },
                 ))
           ]),
         ),

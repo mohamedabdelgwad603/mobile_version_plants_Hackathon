@@ -1,11 +1,11 @@
-class UserModel {
+class RegisterModel {
   String? type;
   String? message;
   userData? data;
 
-  UserModel();
+  RegisterModel();
 
-  UserModel.fromjson(Map<String, dynamic>? json) {
+  RegisterModel.fromjson(Map<String, dynamic>? json) {
     if (json != null) {
       type = json['type'];
       message = json['message'];

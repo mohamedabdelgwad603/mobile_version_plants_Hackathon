@@ -21,6 +21,8 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^8.0.1
   flutter_facebook_auth: ^4.4.1
+  flutter_login_facebook: ^1.6.0
+  flutter_staggered_animations: ^1.1.1
   fluttertoast: ^8.0.9
   google_sign_in: ^5.4.1
   page_transition: ^2.0.9

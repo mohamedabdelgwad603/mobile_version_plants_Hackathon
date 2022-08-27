@@ -17,6 +17,7 @@ class DioHelper {
       Map<String, dynamic>? query}) async {
     dio!.options.headers = {
       'Content-Type': 'application/json',
+      'Accept': 'application/json',
       'Authorization': token ?? ''
     };
     return await dio!.post(url, data: data, queryParameters: query);

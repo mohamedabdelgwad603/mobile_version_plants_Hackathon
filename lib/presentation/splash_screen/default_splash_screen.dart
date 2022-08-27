@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:palnts/presentation/root/root_page.dart';
 import 'package:palnts/presentation/sign_layout/screens/sign_layout_screen.dart';
 import '../../core/utils/app_strings.dart';
@@ -19,7 +20,7 @@ class _DefaultSplashScreenState extends State<DefaultSplashScreen> {
       context, token != null ? RootPage() : SignLayoutScreen());
 
   _startDelay() {
-    _timer = Timer(const Duration(milliseconds: 2000), () => _goNext());
+    _timer = Timer(const Duration(milliseconds: 3000), () => _goNext());
   }
 
   @override
@@ -37,13 +38,22 @@ class _DefaultSplashScreenState extends State<DefaultSplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Image.asset(ImgAssets.logo),
-            Image.asset(ImgAssets.textLogo),
-          ],
+      body: AnimationConfiguration.staggeredList(
+        duration: Duration(milliseconds: 1200),
+        position: 1,
+        child: SlideAnimation(
+          horizontalOffset: 300,
+          child: FadeInAnimation(
+            child: Center(
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Image.asset(ImgAssets.logo),
+                  Image.asset(ImgAssets.textLogo),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );

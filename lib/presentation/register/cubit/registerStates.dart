@@ -1,4 +1,4 @@
-import '../../../models/user_model.dart';
+import '../../../models/register_model.dart';
 
 abstract class AppRegisterStates {}
 //intial state
@@ -9,7 +9,7 @@ class AppRegisterIntialState extends AppRegisterStates {}
 class AppRegisterLoadingState extends AppRegisterStates {}
 
 class AppRegisterSuccessState extends AppRegisterStates {
-  final UserModel registerModel;
+  final RegisterModel registerModel;
 
   AppRegisterSuccessState(this.registerModel);
 }

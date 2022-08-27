@@ -1,14 +1,17 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:palnts/core/utils/end_points.dart';
 
+import '../../../core/utils/constants.dart';
 import '../../../network/remote/DioHelper.dart';
-import '../../../models/user_model.dart';
+import '../../../models/register_model.dart';
+import '../../../network/remote/dio_exceptions.dart';
 import 'registerStates.dart';
 
 class AppRegisterCubit extends Cubit<AppRegisterStates> {
   AppRegisterCubit() : super(AppRegisterIntialState());
-  UserModel registerModel = UserModel();
+  RegisterModel registerModel = RegisterModel();
   //TODO:edit register function
   void userRegister(
       {required String email,
@@ -22,15 +25,23 @@ class AppRegisterCubit extends Cubit<AppRegisterStates> {
       'email': email,
       'password': password
     }).then((value) {
-      registerModel = UserModel.fromjson(value.data);
+      registerModel = RegisterModel.fromjson(value.data);
       print(value.data.toString());
-
       print(registerModel.message);
       // print(UserModel.data!.token);
       emit(AppRegisterSuccessState(registerModel));
     }).catchError((error) {
-      print("error occured is ${error.toString()}");
-      emit(AppRegisterErrorState());
+      DioError dioError = error;
+      if (dioError.type == DioErrorType.response) {
+        String msg = dioError.response?.data['message'][0];
+        Constants.showToast(msg: msg);
+        emit(AppRegisterErrorState());
+      } else {
+        DioExceptions? dioExceptions;
+        dioExceptions = DioExceptions.fromDioError(error);
+        Constants.showToast(msg: '${dioExceptions.message}');
+        emit(AppRegisterErrorState());
+      }
     });
   }
 
