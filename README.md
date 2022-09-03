@@ -1,5 +1,5 @@
 # plants_eccomerce
-A new Flutter project.
+
 ![p](https://user-images.githubusercontent.com/82996452/187059518-a571892a-36e1-4983-94b9-f513ed61ce00.JPG)
 
 ![p1](https://user-images.githubusercontent.com/82996452/187059508-ba48cb7a-7325-4c37-b737-e189942baa2a.JPG)
