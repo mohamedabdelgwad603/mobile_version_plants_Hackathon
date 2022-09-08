@@ -8,4 +8,5 @@ class ImgAssets {
   static const String bottomTree = '$path/bottomTree.png';
   static const String google = '$path/google.png';
   static const String face = '$path/face.png';
+  static const String myPhoto = '$path/me.jpg';
 }

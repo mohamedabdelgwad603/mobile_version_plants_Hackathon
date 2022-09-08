@@ -149,7 +149,7 @@ class LoginScreeen extends StatelessWidget {
                         ),
                         InkWell(
                           onTap: () {
-                            cubit.faceBookSignIn();
+                            cubit.signInWithFace();
                           },
                           child: Image.asset(
                             ImgAssets.face,

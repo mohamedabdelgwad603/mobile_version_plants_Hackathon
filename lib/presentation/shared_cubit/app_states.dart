@@ -33,6 +33,9 @@ class SignInWithGoogleSuccessState extends AppStates {
 
 class SignInWithGoogleErrorState extends AppStates {}
 
+// //sign with face
+// class SignInWithFaceBookState extends AppStates {}
+
 // send googleEmail to api state
 class LoadingSendGoogleEmailToApi extends AppStates {}
 
@@ -43,3 +46,8 @@ class SuccessSendGoogleEmailToApi extends AppStates {
 }
 
 class ErrorSendGoogleEmailToApi extends AppStates {}
+
+//ada to cart state
+class AddToCartState extends AppStates {}
+
+class RemoveFormCartState extends AppStates {}

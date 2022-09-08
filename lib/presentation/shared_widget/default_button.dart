@@ -9,7 +9,7 @@ class DefaultButton extends StatelessWidget {
       required this.text,
       this.color = Colors.green,
       this.width = double.infinity,
-      this.height = 35,
+      this.height = 50,
       this.isBorder = false,
       this.textColor,
       required this.onpressed})

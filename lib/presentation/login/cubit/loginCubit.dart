@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:palnts/core/utils/constants.dart';
 import 'package:palnts/core/utils/end_points.dart';
@@ -29,37 +30,40 @@ class AppLoginCubit extends Cubit<AppLoginStates> {
   }
 
   //sign with facebook
-  //AccessToken? accessToken;
-  FacebookLogin facebookLogin = FacebookLogin();
-  FirebaseAuth auth = FirebaseAuth.instance;
-  Map<String, dynamic>? user;
-  faceBookSignIn() async {
-    FacebookLoginResult result = await facebookLogin.logIn(permissions: [
-      FacebookPermission.publicProfile,
-      FacebookPermission.email,
-    ]);
-    final accessToken = result.accessToken?.token;
-    if (result.status == FacebookLoginStatus.success) {
-      final faceCredential = FacebookAuthProvider.credential(accessToken!);
-      auth.signInWithCredential(faceCredential);
-    }
-  }
+  // FacebookLogin facebookLogin = FacebookLogin();
 
-  // signInWithFace() async {
-  //   final LoginResult result = await FacebookAuth.instance.login();
-  //   if (result.status == LoginStatus.success) {
-  //     accessToken = result.accessToken;
-  //     final userData = await FacebookAuth.instance.getUserData();
-  //     user = userData;
-  //     print(user);
-  //     emit(SignInWithFaceBookState());
-  //   } else {
-  //     print(result.status);
-  //     print(result.message);
-  //     print(user);
-  //     emit(SignInWithFaceBookState());
+  // faceBookSignIn() async {
+  //   FacebookLoginResult result = await facebookLogin.logIn(permissions: [
+  //     FacebookPermission.publicProfile,
+  //     FacebookPermission.email,
+  //   ]);
+  //   final accessToken = result.accessToken?.token;
+  //   if (result.status == FacebookLoginStatus.success) {
+  //     final faceCredential = FacebookAuthProvider.credential(accessToken!);
+  //     auth.signInWithCredential(faceCredential);
   //   }
   // }
+
+  // FirebaseAuth auth = FirebaseAuth.instance;
+  AccessToken? accessToken;
+  Map<String, dynamic>? user;
+  signInWithFace() async {
+    final LoginResult result = await FacebookAuth.instance
+        .login(permissions: ['email', 'public_profile']);
+    if (result.status == LoginStatus.success) {
+      accessToken = result.accessToken;
+      final userData = await FacebookAuth.instance.getUserData();
+      user = userData;
+      //print(user);
+      print(user!['picture']['data']['url']);
+      emit(SignInWithFaceBookState());
+    } else {
+      print(result.status);
+      print(result.message);
+      print(user);
+      emit(SignInWithFaceBookState());
+    }
+  }
 
   //change Visibilty icon for padssword Text field
   IconData suffixicon = Icons.visibility_outlined;

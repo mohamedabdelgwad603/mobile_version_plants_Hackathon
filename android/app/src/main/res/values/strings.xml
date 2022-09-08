@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">auth</string>
-<string name="facebook_app_id">1234</string>
+<string name="facebook_app_id">1117769998834239</string>
 <string name="fb_login_protocol_scheme">fb1234</string>
-<string name="facebook_client_token">56789</string>
+<string name="facebook_client_token">a9535041407ab7e6b122266a1454e52c</string>
 
 
 </resources>

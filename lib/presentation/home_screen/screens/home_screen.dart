@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:palnts/core/utils/app_colors.dart';
 import 'package:palnts/core/utils/extentions.dart';
+import 'package:palnts/presentation/cart/cart_screen.dart';
 import 'package:palnts/presentation/home_screen/screens/all_screen.dart';
 import 'package:palnts/presentation/home_screen/screens/plants_screen.dart';
 import 'package:palnts/presentation/home_screen/screens/seeds_screen.dart';
@@ -65,30 +66,40 @@ class _HomeScreenState extends State<HomeScreen> {
               width: 10,
             ),
             Container(
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                    color: AppColors.primary,
-                    borderRadius: BorderRadius.circular(10)),
-                child: BlocConsumer<AppCubit, AppStates>(
-                  listener: (context, state) {},
-                  builder: (context, state) {
-                    return ConditionalBuilder(
-                        condition: state is! LoadingAppLogoutState,
-                        builder: (context) => InkWell(
-                              onTap: () {
-                                BlocProvider.of<AppCubit>(context)
-                                    .logout(context);
-                              },
-                              child: Icon(
-                                Icons.shopping_cart_outlined,
-                                color: Colors.white,
-                              ),
-                            ),
-                        fallback: (context) => CircularProgressIndicator(
-                              color: Colors.white,
-                            ));
-                  },
-                ))
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                  color: AppColors.primary,
+                  borderRadius: BorderRadius.circular(10)),
+              child: InkWell(
+                onTap: () {
+                  Constants.push(context, CartScreen());
+                },
+                child: Icon(
+                  Icons.shopping_cart_outlined,
+                  color: Colors.white,
+                ),
+              ),
+              // BlocConsumer<AppCubit, AppStates>(
+              //   listener: (context, state) {},
+              //   builder: (context, state) {
+              //     return ConditionalBuilder(
+              //         condition: state is! LoadingAppLogoutState,
+              //         builder: (context) => InkWell(
+              //               onTap: () {
+              //                 BlocProvider.of<AppCubit>(context)
+              //                     .logout(context);
+              //               },
+              //               child: Icon(
+              //                 Icons.shopping_cart_outlined,
+              //                 color: Colors.white,
+              //               ),
+              //             ),
+              //         fallback: (context) => CircularProgressIndicator(
+              //               color: Colors.white,
+              //             ));
+              //   },
+              // )
+            )
           ]),
         ),
 

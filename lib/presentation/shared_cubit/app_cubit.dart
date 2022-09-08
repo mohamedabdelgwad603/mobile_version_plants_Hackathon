@@ -1,7 +1,7 @@
-import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:palnts/core/utils/constants.dart';
 import 'package:palnts/models/login_model.dart';
@@ -58,6 +58,7 @@ class AppCubit extends Cubit<AppStates> {
       AppStrings.token = null;
       Constants.pushReplace(context, SignLayoutScreen());
       logOutGoogle();
+      // logoutFaceBook();
       emit(SuccessAppLogoutState());
     });
   }
@@ -89,6 +90,31 @@ class AppCubit extends Cubit<AppStates> {
     }
   }
 
+  AccessToken? accessToken;
+  Map<String, dynamic>? user;
+  // FacebookAuth facebookAuth = FacebookAuth.instance;
+  // signInWithFace() async {
+  //   final LoginResult result = await FacebookAuth.instance
+  //       .login(permissions: ['email', 'public_profile']);
+  //   if (result.status == LoginStatus.success) {
+  //     accessToken = result.accessToken;
+  //     final userData = await FacebookAuth.instance.getUserData();
+  //     user = userData;
+  //     //print(user);
+  //     // print(user!['picture']['data']['url']);
+  //     emit(SignInWithFaceBookState());
+  //   } else {
+  //     print(result.status);
+  //     print(result.message);
+  //     print(user);
+  //     emit(SignInWithFaceBookState());
+  //   }
+  // }
+
+  // logoutFaceBook() async {
+  //   await FacebookAuth.i.logOut().then((value) => print('logee out face'));
+  // }
+
   sendGoogleEmailToApi() {
     emit(LoadingSendGoogleEmailToApi());
     DioHelper.postData(url: '/api/v1/auth/google', data: {
@@ -113,9 +139,25 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
-  logOutGoogle() {
+  logOutGoogle() async {
     googleSignInAccount = null;
-    googleSignIn.signOut();
-    auth.signOut();
+    await googleSignIn.signOut();
+    await auth.signOut();
+  }
+
+  //add to cart
+  List<Product> cartItems = [];
+  addToCart(Product product) {
+    if (!cartItems.contains(product)) {
+      cartItems.add(product);
+      emit(AddToCartState());
+    }
+  }
+
+  removeFromCart(Product product) {
+    if (cartItems.contains(product)) {
+      cartItems.remove(product);
+      emit(RemoveFormCartState());
+    }
   }
 }

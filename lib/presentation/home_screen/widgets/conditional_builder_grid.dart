@@ -83,7 +83,11 @@ class ConditionalBuilderGrid extends StatelessWidget {
               style: context.subtitle2,
             ),
             Text('${product.price} EGP'),
-            DefaultButton(text: 'Add to cart', onpressed: () {})
+            DefaultButton(
+                text: 'Add to cart',
+                onpressed: () {
+                  BlocProvider.of<AppCubit>(context).addToCart(product);
+                })
           ],
         ),
       ),
