@@ -29,9 +29,11 @@ my cart screen
 ![p6](https://user-images.githubusercontent.com/82996452/188262612-8f3fb993-b1be-4114-83bf-c31c60a724d7.JPG)
 
 Filter list by searching plant's name
+
 ![p4](https://user-images.githubusercontent.com/82996452/187059517-9516d26e-ed74-4a7c-9b93-0d2d0e9b45b5.JPG)
 
 profile editing screen
+
 ![p5](https://user-images.githubusercontent.com/82996452/188256578-cae84513-d2d8-4d3f-bd58-db7c93f4a12e.JPG)
 
 
