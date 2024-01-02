@@ -1,8 +1,9 @@
 📘 Overview
 
 # e-commerce store for plants
-Used Flutter with BLoC pattern with clean code to build e-commerce app that fetch data from api
-signing in with google and facebook
+-Used Flutter with BLoC pattern with clean code to build e-commerce app that fetch data from api
+
+-signing in with google and facebook
 
 📱 Screens
 
